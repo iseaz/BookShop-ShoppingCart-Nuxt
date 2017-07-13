@@ -38,6 +38,20 @@
 					@click="postBook()">Save book</button>
 			</div>
 		</div>
+
+		<div class="panel panel-default" style="margin-top: 25px;">
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="formControlSelect" class="control-label">Select a book title to delete</label>
+					<select placeholder="select" id="formControlSelect" class="form-control" ref="delete">
+						<option value="select">Select</option>
+						<option v-for="book in books" key="book._id" :value="book._id">{{book.title}}</option>
+					</select>
+				</div>
+
+				<button type="button" class="btn btn-sm btn-danger" @click="deleteBook()">Delete book</button>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -48,6 +62,11 @@
 				title: '',
 				description: '',
 				price: ''
+			}
+		},
+		computed: {
+			books(){
+				return this.$store.getters.books
 			}
 		},
 		methods: {
@@ -63,6 +82,11 @@
 				this.title = ''
 				this.description = ''
 				this.price = ''
+			},
+			deleteBook(){
+				const bookId = this.$refs.delete.value
+
+				this.$store.dispatch('deleteBook', bookId)
 			}
 		}
 	}

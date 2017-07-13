@@ -1,10 +1,29 @@
+export const totals = (payloadArr) => {
+	const totalAmount = payloadArr.map(cartArr => {
+		return cartArr.price * cartArr.quantity
+	}).reduce((a, b) => a + b, 0)
+
+	const totalQuantity = payloadArr.map(cartArr => {
+		return cartArr.quantity
+	}).reduce((a, b) => a + b, 0)
+
+	return {
+		amount: totalAmount.toFixed(2),
+		qty: totalQuantity
+	}
+}
+
 const state = {
-	cart: []
+	cart: [],
+	totalAmount: 0,
+	totalQuantity: 0
 }
 
 const mutations = {
 	'ADD_TO_CART'(state, payload){
 		state.cart = [...state.cart, ...payload]
+		state.totalAmount = totals(state.cart).amount
+		state.totalQuantity = totals(state.cart).qty
 	},
 	'DELETE_CART'(state, _id){
 		const currentCartToDelete = [...state.cart]
@@ -13,6 +32,8 @@ const mutations = {
 		})
 
 		state.cart = [...currentCartToDelete.slice(0, indexToDelete), ...currentCartToDelete.slice(indexToDelete+1)]
+		state.totalAmount = totals(state.cart).amount
+		state.totalQuantity = totals(state.cart).qty
 	},
 	'UPDATE_CART'(state, payload){
 		const currentCartToUpdate = [...state.cart]
@@ -30,6 +51,9 @@ const mutations = {
 			newCart,
 			...currentCartToUpdate.slice(indexToUpdate+1)
 		]
+
+		state.totalAmount = totals(state.cart).amount
+		state.totalQuantity = totals(state.cart).qty
 	}
 }
 
@@ -48,6 +72,12 @@ const actions = {
 const getters = {
 	cart(state){
 		return state.cart
+	},
+	totalAmount(state){
+		return state.totalAmount
+	},
+	totalQuantity(state){
+		return state.totalQuantity
 	}
 }
 

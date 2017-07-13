@@ -37,7 +37,7 @@
 
 				<div class="row">
 					<div class="col-xs-12">
-						<h6>Total amount:</h6>
+						<h6>Total amount: {{totalAmount}}</h6>
 						<button 
 							class="btn btn-success btn-sm" 
 							@click="onCheckout()">PROCEED TO CHECKOUT</button>
@@ -68,6 +68,9 @@
 							<p>You will receive an email confirmation.</p>
 						</div>
 						<div class="modal-footer">
+							<div class="rows">
+								<div class="col-xs-6">total $: {{totalAmount}}</div>
+							</div>
 							<button 
 								type="button" 
 								class="btn btn-default" 
@@ -95,6 +98,9 @@
 		computed: {
 			cart(){
 				return this.$store.getters.cart
+			},
+			totalAmount(){
+				return this.$store.getters.totalAmount
 			}
 		},
 		methods: {
