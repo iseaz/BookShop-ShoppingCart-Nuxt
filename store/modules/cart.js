@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export const totals = (payloadArr) => {
 	const totalAmount = payloadArr.map(cartArr => {
 		return cartArr.price * cartArr.quantity
@@ -20,6 +22,11 @@ const state = {
 }
 
 const mutations = {
+	'GET_CART'(state, payload){
+		state.cart = payload
+		state.totalAmount = totals(payload).amount
+		state.totalQuantity = totals(payload).qty
+	},
 	'ADD_TO_CART'(state, payload){
 		state.cart = [...state.cart, ...payload]
 		state.totalAmount = totals(state.cart).amount
@@ -44,8 +51,20 @@ const mutations = {
 }
 
 const actions = {
+	getCart({ commit }){
+		axios.get('/api/cart').then(resp => {
+			if (resp.data == 'no data') {
+				return []
+			}
+
+			commit('GET_CART', resp.data)
+		})
+	},
 	addToCart({ commit }, payload){
-		commit('ADD_TO_CART', payload)
+		axios.post('/api/cart', payload)
+			.then(resp => {
+				commit('ADD_TO_CART', resp.data)
+			})
 	},
 	deleteCart({ commit }, _id){
 		commit('DELETE_CART', _id)
@@ -63,7 +82,11 @@ const actions = {
 
 		const cartUpdate = [...currentCartToUpdate.slice(0, indexToUpdate), newCart, ...currentCartToUpdate.slice(indexToUpdate+1)]
 
-		commit('UPDATE_CART', cartUpdate)
+		axios.post('/api/cart', cartUpdate)
+			.then(resp => {
+				console.log(resp.data)
+				commit('UPDATE_CART', resp.data)
+			})
 	}
 }
 

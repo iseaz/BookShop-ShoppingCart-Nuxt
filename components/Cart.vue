@@ -82,8 +82,6 @@
 			</div><!-- /.modal -->
 
 			<div class="modal-overlay" :class="{in: showModal}"></div>
-
-			<div>{{cart}}</div>
 		</div>
 
 		<div v-else> </div>
@@ -104,6 +102,9 @@
 			totalAmount(){
 				return this.$store.getters.totalAmount
 			}
+		},
+		created(){
+			this.$store.dispatch('getCart')
 		},
 		methods: {
 			deleteCart(_id){
