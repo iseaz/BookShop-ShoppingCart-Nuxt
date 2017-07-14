@@ -38,7 +38,8 @@
 					} else {
 						this.$store.dispatch('updateCart', {
 							_id,
-							unit: 1
+							unit: 1,
+							cart: this.cart
 						})
 					}
 				} else {

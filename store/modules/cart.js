@@ -36,24 +36,10 @@ const mutations = {
 		state.totalQuantity = totals(state.cart).qty
 	},
 	'UPDATE_CART'(state, payload){
-		const currentCartToUpdate = [...state.cart]
-		const indexToUpdate = currentCartToUpdate.findIndex(cart => {
-			return cart._id == payload._id
-		})
+		state.cart = payload
 
-		const newCart = {
-			...currentCartToUpdate[indexToUpdate],
-			quantity: currentCartToUpdate[indexToUpdate].quantity + payload.unit
-		}
-
-		state.cart = [
-			...currentCartToUpdate.slice(0, indexToUpdate),
-			newCart,
-			...currentCartToUpdate.slice(indexToUpdate+1)
-		]
-
-		state.totalAmount = totals(state.cart).amount
-		state.totalQuantity = totals(state.cart).qty
+		state.totalAmount = totals(payload).amount
+		state.totalQuantity = totals(payload).qty
 	}
 }
 
@@ -65,7 +51,19 @@ const actions = {
 		commit('DELETE_CART', _id)
 	},
 	updateCart({ commit }, payload){
-		commit('UPDATE_CART', payload)
+		const currentCartToUpdate = payload.cart
+		const indexToUpdate = currentCartToUpdate.findIndex(cart => {
+			return cart._id == payload._id
+		})
+
+		const newCart = {
+			...currentCartToUpdate[indexToUpdate],
+			quantity: currentCartToUpdate[indexToUpdate].quantity + payload.unit
+		}
+
+		const cartUpdate = [...currentCartToUpdate.slice(0, indexToUpdate), newCart, ...currentCartToUpdate.slice(indexToUpdate+1)]
+
+		commit('UPDATE_CART', cartUpdate)
 	}
 }
 

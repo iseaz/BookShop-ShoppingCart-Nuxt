@@ -82,6 +82,8 @@
 			</div><!-- /.modal -->
 
 			<div class="modal-overlay" :class="{in: showModal}"></div>
+
+			<div>{{cart}}</div>
 		</div>
 
 		<div v-else> </div>
@@ -110,14 +112,16 @@
 			onIncrement(_id){
 				this.$store.dispatch('updateCart', {
 					_id,
-					unit: 1
+					unit: 1,
+					cart: this.cart
 				})
 			},
 			onDecrement(_id, quantity){
 				if (quantity > 1) {
 					this.$store.dispatch('updateCart', {
 						_id,
-						unit: -1
+						unit: -1,
+						cart: this.cart
 					})
 				}
 			},
