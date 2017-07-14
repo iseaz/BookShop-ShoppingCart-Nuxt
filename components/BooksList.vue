@@ -3,6 +3,7 @@
 		<div class="row">
 			<Cart />
 		</div>
+		
 		<div class="row">
 			<BookItem 
 				v-for="book in books" 

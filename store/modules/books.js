@@ -1,7 +1,8 @@
 import booksData from '../../tmpData'
+import axios from 'axios'
 
 const state = {
-	books: booksData
+	books: []
 }
 
 const mutations = {
@@ -42,13 +43,19 @@ const mutations = {
 
 const actions = {
 	getBooks({ commit }, payload){
-		commit('GET_BOOKS', booksData)
+		axios.get('/api/books').then(resp => {
+			commit('GET_BOOKS', resp.data)
+		})
 	},
 	postBooks({ commit }, payload){
-		commit('POST_BOOKS', payload)
+		axios.post('/api/books', payload).then(resp => {
+			commit('POST_BOOKS', resp.data)
+		})
 	},
 	deleteBook({ commit }, _id){
-		commit('DELETE_BOOK', _id)
+		axios.delete(`/api/books/${_id}`).then(resp => {
+			commit('DELETE_BOOK', _id)
+		})
 	},
 	updateBook({ commit }, payload){
 		commit('UPDATE_BOOK', payload)

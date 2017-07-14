@@ -72,7 +72,6 @@
 		methods: {
 			postBook(){
 				const book = [{
-					_id: Math.floor(Math.random() * 99),
 					title: this.title,
 					description: this.description,
 					price: this.price

@@ -5,16 +5,22 @@
   "scripts": {
     "dev": "node server.js",
     "build": "nuxt build",
+    "gen": "nuxt generate",
     "start": "node server.js",
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "http-proxy": "^1.16.2",
     "mongoose": "^4.11.1",
     "nuxt": "latest"
   },
   "devDependencies": {
     "node-sass": "^4.5.3",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
     "sass-loader": "^6.0.6"
   }
 }
