@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const isProd = (process.env.NODE_ENV === 'production')
-const port = process.env.PORT || 3210
+const port = 3210
 
 const mongoose = require('mongoose')
 const Books = require('./models/books')
