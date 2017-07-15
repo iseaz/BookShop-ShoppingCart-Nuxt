@@ -41,6 +41,8 @@ const mutations = {
 		state.cart = [...currentCartToDelete.slice(0, indexToDelete), ...currentCartToDelete.slice(indexToDelete+1)]
 		state.totalAmount = totals(state.cart).amount
 		state.totalQuantity = totals(state.cart).qty
+
+		axios.post('/api/cart', state.cart).then(resp => resp.data)
 	},
 	'UPDATE_CART'(state, payload){
 		state.cart = payload
@@ -81,7 +83,7 @@ const actions = {
 		}
 
 		const cartUpdate = [...currentCartToUpdate.slice(0, indexToUpdate), newCart, ...currentCartToUpdate.slice(indexToUpdate+1)]
-
+		
 		axios.post('/api/cart', cartUpdate)
 			.then(resp => {
 				console.log(resp.data)

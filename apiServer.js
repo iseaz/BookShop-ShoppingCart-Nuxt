@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 
-mongoose.connect(isProd ? 'mongodb://iseaz:1234@ds141108.mlab.com:41108/bookshop' : 'mongodb://localhost:27017/bookshop')
+mongoose.connect(isProd ? 'mongodb://iseaz:1234@ds141108.mlab.com:41108/bookshop' : 'mongodb://iseaz:1234@ds141108.mlab.com:41108/bookshop')
 let db = mongoose.connection
 db.on('error', console.error.bind(console, '# MongoDB - connection error'))
 
