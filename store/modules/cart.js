@@ -31,9 +31,11 @@ const mutations = {
 		state.cart = [...state.cart, ...payload]
 		state.totalAmount = totals(state.cart).amount
 		state.totalQuantity = totals(state.cart).qty
+
+		axios.post('/api/cart', state.cart).then(resp => resp.data)
 	},
 	'DELETE_CART'(state, _id){
-		const currentCartToDelete = [...state.cart]
+		const currentCartToDelete = state.cart
 		const indexToDelete = currentCartToDelete.findIndex(cart => {
 			return cart._id == _id
 		})
@@ -63,10 +65,11 @@ const actions = {
 		})
 	},
 	addToCart({ commit }, payload){
-		axios.post('/api/cart', payload)
-			.then(resp => {
-				commit('ADD_TO_CART', resp.data)
-			})
+		commit('ADD_TO_CART', payload)
+		// axios.post('/api/cart', payload)
+		// 	.then(resp => {
+		// 		commit('ADD_TO_CART', resp.data)
+		// 	})
 	},
 	deleteCart({ commit }, _id){
 		commit('DELETE_CART', _id)
@@ -83,7 +86,7 @@ const actions = {
 		}
 
 		const cartUpdate = [...currentCartToUpdate.slice(0, indexToUpdate), newCart, ...currentCartToUpdate.slice(indexToUpdate+1)]
-		
+
 		axios.post('/api/cart', cartUpdate)
 			.then(resp => {
 				console.log(resp.data)
