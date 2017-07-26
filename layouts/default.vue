@@ -14,7 +14,7 @@
 			appHeader: Header
 		},
 		head: {
-			title: 'Book Shop',
+			title: 'Bookshop SSR with Nuxt.js and MongoDB',
 			meta: [
 				{ name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no' },
 				{ charset: 'utf-8' }
